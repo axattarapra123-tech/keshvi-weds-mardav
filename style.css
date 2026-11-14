@@ -79,1114 +79,691 @@ body {
 }
 
 /* ========================================================
-   ULTRA-REALISTIC 3D ROYAL PALACE GATE (OPENING EXPERIENCE)
+   MODERN ROYAL LUXURY PORTAL (AUTOMATIC UNLOCK & REVEAL)
    ======================================================== */
-.gate-overlay-3d {
+.gate-overlay-modern {
   position: fixed;
   inset: 0;
   width: 100vw;
   height: 100vh;
   z-index: 9999;
-  background: radial-gradient(circle at center, #1b0206 0%, #080102 100%);
+  background: radial-gradient(circle at center, #26040c 0%, #120105 55%, #050002 100%);
   overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
-  perspective: 1600px;
-  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  perspective: 1400px;
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.8s cubic-bezier(0.16, 1, 0.3, 1);
   will-change: opacity, visibility;
+  touch-action: manipulation;
 }
 
-.gate-overlay-3d.dismissed {
+.gate-overlay-modern.dismissed {
   opacity: 0 !important;
   visibility: hidden !important;
   pointer-events: none !important;
 }
 
-/* Volumetric Golden Light Rays & Ambient Atmosphere */
-.palace-light-burst {
+/* Ambient Luminous Golden & Ruby Aurora Glow */
+.modern-ambient-aurora {
   position: absolute;
-  inset: 0;
-  background: radial-gradient(circle at center, rgba(251, 238, 164, 0.75) 0%, rgba(212, 175, 55, 0.5) 25%, rgba(99, 12, 28, 0.75) 55%, #080102 85%);
-  opacity: 0;
-  transition: opacity 1.6s cubic-bezier(0.16, 1, 0.3, 1);
+  inset: -20%;
+  background: radial-gradient(circle at 50% 35%, rgba(212, 175, 55, 0.18) 0%, rgba(99, 12, 28, 0.25) 40%, transparent 70%);
+  filter: blur(60px);
+  pointer-events: none;
+  animation: auroraPulse 6s ease-in-out infinite alternate;
   z-index: 1;
-  pointer-events: none;
 }
 
-.gate-overlay-3d.opening .palace-light-burst {
-  opacity: 1;
+@keyframes auroraPulse {
+  0% { transform: scale(0.95); opacity: 0.6; }
+  100% { transform: scale(1.08); opacity: 0.95; }
 }
 
-.palace-ambient-glow {
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(circle at 50% 40%, rgba(255, 215, 0, 0.12) 0%, transparent 60%);
-  pointer-events: none;
-  z-index: 2;
-}
-
-.palace-sparkle-stars {
-  position: absolute;
-  inset: 0;
-  background-image: radial-gradient(rgba(212, 175, 55, 0.4) 1.5px, transparent 1.5px);
-  background-size: 32px 32px;
-  opacity: 0.25;
-  z-index: 2;
-}
-
-/* 3D Palace Architecture Stage */
-.palace-arch-stage {
-  position: relative;
-  width: 100vw;
-  height: 100vh;
-  max-width: 920px;
-  max-height: 840px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  perspective: 1600px;
-  transform-style: preserve-3d;
-  z-index: 10;
-  padding: 8px;
-  transition: transform 0.15s ease-out;
-}
-
-/* Top Royal Arch / Rajasthani Mehrab */
-.palace-top-arch {
-  width: 100%;
-  max-width: 780px;
-  z-index: 25;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  pointer-events: none;
-  margin-bottom: -10px;
-}
-
-.arch-gold-crest {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 16px;
-  background: linear-gradient(135deg, rgba(68, 7, 17, 0.98), rgba(28, 2, 6, 0.99));
-  border: 2px solid var(--gold-primary);
-  border-bottom: none;
-  padding: 7px 26px;
-  border-radius: 35px 35px 0 0;
-  box-shadow: 0 -10px 25px rgba(0, 0, 0, 0.85), 0 0 20px rgba(212, 175, 55, 0.4);
-}
-
-.sacred-kalash {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  line-height: 1;
-}
-
-.kalash-coconut { font-size: 0.95rem; margin-bottom: -4px; filter: drop-shadow(0 0 4px #d4af37); }
-.kalash-pot { font-size: 1.25rem; filter: drop-shadow(0 0 6px rgba(212, 175, 55, 0.8)); }
-
-.arch-ribbon-text {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-}
-
-.arch-mantra {
-  font-family: var(--font-gujarati);
-  font-size: 1rem;
-  font-weight: 800;
-  color: var(--gold-light);
-  letter-spacing: 0.5px;
-  text-shadow: 0 0 10px rgba(212, 175, 55, 0.6);
-}
-
-.arch-subtext {
-  font-family: var(--font-cinzel);
-  font-size: 0.65rem;
-  font-weight: 700;
-  letter-spacing: 2px;
-  color: var(--gold-primary);
-  opacity: 0.85;
-}
-
-.hanging-bells-row {
-  width: 100%;
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  padding: 0 32px;
-  margin-top: -3px;
-}
-
-.hanging-brass-bell {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  animation: bellSway 3.2s ease-in-out infinite alternate;
-  transform-origin: top center;
-}
-
-.bell-1 { animation-delay: 0.1s; }
-.bell-2 { animation-delay: 0.5s; }
-.bell-3 { animation-delay: 0.9s; }
-.bell-4 { animation-delay: 0.3s; }
-
-.bell-chain {
-  width: 2px;
-  height: 22px;
-  background: linear-gradient(to bottom, #d4af37, #8c6b16);
-  box-shadow: 0 0 4px rgba(212, 175, 55, 0.5);
-}
-
-.bell-body {
-  font-size: 1.35rem;
-  filter: drop-shadow(0 0 8px rgba(255, 170, 0, 0.75));
-}
-
-.marigold-toran-band {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  margin-top: 6px;
-  padding: 0 10px;
-  border-top: 2px dashed rgba(212, 175, 55, 0.55);
-}
-
-.toran-knot {
-  font-size: 0.95rem;
-  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.6));
-}
-
-.toran-knot.flower.gold { font-size: 1.05rem; }
-
-/* 3D Gate Chassis */
-.gate-3d-chassis {
-  position: relative;
-  width: 100%;
-  max-width: 780px;
-  height: 72vh;
-  max-height: 590px;
-  display: flex;
-  align-items: stretch;
-  perspective: 1600px;
-  transform-style: preserve-3d;
-  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.98);
-}
-
-/* Left & Right Carved Fort Pillars with 3D Diyas */
-.palace-pillar {
-  width: 44px;
-  background: linear-gradient(to right, #38050e 0%, #680d1b 45%, #240308 100%);
-  border: 1.5px solid var(--gold-primary);
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  z-index: 20;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.9);
-  position: relative;
-}
-
-.pillar-cap-ornate {
-  height: 36px;
-  background: radial-gradient(circle, #fbeea4 0%, #d4af37 60%, #8c6b16 100%);
-  border: 1px solid #fff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.6);
-}
-
-.pillar-diya-bracket {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: -12px;
-}
-
-.pillar-diya-flame {
-  width: 10px;
-  height: 16px;
-  border-radius: 50% 50% 20% 20%;
-  background: radial-gradient(circle at 50% 80%, #ffffff 0%, #ffbe0b 35%, #fb5607 70%, transparent 100%);
-  animation: flameFlicker 1.5s ease-in-out infinite alternate;
-  filter: drop-shadow(0 0 10px rgba(255, 170, 0, 0.95));
-  margin-bottom: -4px;
-}
-
-.pillar-diya-bowl {
-  font-size: 1.15rem;
-  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.8));
-}
-
-.pillar-shaft {
-  flex: 1;
-  display: flex;
-  position: relative;
-  justify-content: center;
-  overflow: hidden;
-}
-
-.pillar-shaft-groove {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  width: 6px;
-  background: linear-gradient(to right, rgba(0,0,0,0.5), transparent, rgba(255,215,0,0.3));
-}
-
-.pillar-jali-carving {
-  width: 14px;
-  height: 100%;
-  background: repeating-linear-gradient(to right, transparent, transparent 2px, rgba(212, 175, 55, 0.35) 2px, rgba(212, 175, 55, 0.35) 4px);
-}
-
-.pillar-pedestal {
-  height: 26px;
-  background: radial-gradient(circle, #fbeea4 0%, #d4af37 60%, #8c6b16 100%);
-  border: 1px solid #fff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.pillar-base-relief {
-  color: #2e030a;
-  font-size: 0.8rem;
-  font-weight: 900;
-}
-
-/* Doors Viewport */
-.doors-perspective-viewport {
-  position: relative;
-  flex: 1;
-  display: flex;
-  perspective: 1600px;
-  transform-style: preserve-3d;
-  background: #080102;
-  overflow: visible;
-}
-
-/* 3D Royal Velvet Curtains */
-.velvet-curtain {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  width: 50%;
-  background: linear-gradient(135deg, #7a0a1e 0%, #4a0612 60%, #290309 100%);
-  z-index: 4;
-  box-shadow: inset 0 0 35px rgba(0, 0, 0, 0.85);
-  transition: transform 2.2s cubic-bezier(0.16, 1, 0.3, 1) 0.3s;
-  will-change: transform;
-}
-
-.curtain-left {
-  left: 0;
-  border-right: 2px solid var(--gold-primary);
-}
-
-.curtain-right {
-  right: 0;
-  border-left: 2px solid var(--gold-primary);
-}
-
-.curtain-folds {
-  position: absolute;
-  inset: 0;
-  background: repeating-linear-gradient(to right, transparent, transparent 15px, rgba(0, 0, 0, 0.28) 15px, rgba(0, 0, 0, 0.28) 30px);
-}
-
-.curtain-tassel {
-  position: absolute;
-  bottom: 25px;
-  font-size: 1.25rem;
-  filter: drop-shadow(0 2px 5px rgba(0,0,0,0.8));
-}
-
-.curtain-left .curtain-tassel { right: 8px; }
-.curtain-right .curtain-tassel { left: 8px; }
-
-.gate-overlay-3d.opening .curtain-left {
-  transform: translateX(-104%);
-}
-
-.gate-overlay-3d.opening .curtain-right {
-  transform: translateX(104%);
-}
-
-/* 3D Door Wings (Antique Carved Rosewood & Brass) */
-.door-3d-wing {
-  width: 50%;
-  height: 100%;
-  position: relative;
-  transform-style: preserve-3d;
-  transition: transform 2.5s cubic-bezier(0.2, 1, 0.3, 1);
-  will-change: transform;
-  backface-visibility: hidden;
-  cursor: pointer;
-  z-index: 10;
-}
-
-.door-left {
-  transform-origin: left center;
-  border-right: 2px solid var(--gold-primary);
-}
-
-.door-right {
-  transform-origin: right center;
-  border-left: 2px solid var(--gold-primary);
-}
-
-/* Realistic 3D Doors Swing Open in Perspective */
-.gate-overlay-3d.opening .door-left {
-  transform: rotateY(-126deg) translateZ(-40px);
-}
-
-.gate-overlay-3d.opening .door-right {
-  transform: rotateY(126deg) translateZ(-40px);
-}
-
-/* Antique Rosewood Texture */
-.wood-antique-rosewood {
-  position: absolute;
-  inset: 0;
-  background: 
-    linear-gradient(145deg, #440711 0%, #28040a 45%, #160105 100%);
-  border: 3.5px solid #140104;
-  padding: 8px;
-  transform-style: preserve-3d;
-}
-
-.door-panel-recess.outer-frame {
-  width: 100%;
-  height: 100%;
-  border: 1.5px solid var(--gold-primary);
-  background: linear-gradient(135deg, rgba(140, 107, 22, 0.35), rgba(38, 3, 9, 0.75));
-  padding: 8px;
-  box-shadow: inset 0 0 25px rgba(0, 0, 0, 0.95);
-}
-
-.door-panel-recess.inner-frame {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  border: 1px dashed rgba(251, 238, 164, 0.45);
-  background: radial-gradient(circle at center, #3d050f 0%, #1a0105 100%);
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-around;
-}
-
-/* Jali Lattice Work */
-.door-jali-carving-box {
-  position: relative;
-  width: 90%;
-  height: 48%;
-  border: 1px solid rgba(212, 175, 55, 0.45);
-  border-radius: 8px;
-  overflow: hidden;
-  box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.85);
-}
-
-.jali-floral-pattern {
+.modern-sparkle-stars {
   position: absolute;
   inset: 0;
   background-image: 
-    radial-gradient(rgba(212, 175, 55, 0.35) 1.5px, transparent 1.5px),
-    radial-gradient(rgba(212, 175, 55, 0.35) 1.5px, transparent 1.5px);
-  background-size: 20px 20px;
-  background-position: 0 0, 10px 10px;
+    radial-gradient(rgba(251, 238, 164, 0.7) 1px, transparent 1px),
+    radial-gradient(rgba(212, 175, 55, 0.5) 1.5px, transparent 1.5px);
+  background-size: 80px 80px, 130px 130px;
+  background-position: 0 0, 40px 40px;
+  opacity: 0.35;
+  pointer-events: none;
+  z-index: 2;
+  animation: starsFloat 20s linear infinite;
 }
 
-.jali-sun-mandala {
+@keyframes starsFloat {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-80px); }
+}
+
+/* Main Modern Portal Stage */
+.modern-portal-stage {
+  position: relative;
+  z-index: 10;
+  width: 92vw;
+  max-width: 480px;
+  height: 92vh;
+  max-height: 800px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  transition: transform 0.4s ease-out;
+  transform-style: preserve-3d;
+}
+
+/* Top Modern Auspicious Crest */
+.modern-top-crest {
+  text-align: center;
+  z-index: 20;
+}
+
+.modern-ganesha-badge {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 6px 18px;
+  background: rgba(36, 4, 10, 0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(212, 175, 55, 0.35);
+  border-radius: 30px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5), 0 0 16px rgba(212, 175, 55, 0.15);
+}
+
+.modern-ganesha-badge .gold-shlok {
+  font-family: var(--font-gujarati);
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  background: linear-gradient(135deg, #fff7c0 0%, #d4af37 50%, #f3d878 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.6));
+}
+
+.modern-ganesha-badge .modern-invitation-tag {
+  font-family: var(--font-cinzel);
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 2.5px;
+  color: rgba(251, 238, 164, 0.85);
+  text-transform: uppercase;
+  margin-top: 2px;
+}
+
+/* Modern Doors Chassis (The Portal Box) */
+.modern-doors-chassis {
+  position: relative;
+  width: 100%;
+  flex: 1;
+  max-height: 680px;
+  border-radius: 28px;
+  overflow: hidden;
+  border: 1.5px solid rgba(212, 175, 55, 0.5);
+  box-shadow: 
+    0 25px 60px rgba(0, 0, 0, 0.85),
+    0 0 30px rgba(212, 175, 55, 0.2),
+    inset 0 0 35px rgba(0, 0, 0, 0.7);
+  background: #110104;
+}
+
+/* Dual Sliding Door Wings */
+.modern-door-wing {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 50.5%;
+  z-index: 8;
+  overflow: hidden;
+  transition: transform 1.3s cubic-bezier(0.2, 0.9, 0.3, 1);
+  will-change: transform;
+}
+
+.modern-door-wing.door-left {
+  left: 0;
+  border-right: 1px solid rgba(212, 175, 55, 0.55);
+}
+
+.modern-door-wing.door-right {
+  right: 0;
+  border-left: 1px solid rgba(212, 175, 55, 0.55);
+}
+
+.wing-inner-glass {
+  position: absolute;
+  inset: 0;
+  background: 
+    linear-gradient(135deg, rgba(46, 5, 13, 0.96) 0%, rgba(18, 2, 5, 0.98) 100%);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.85);
+}
+
+.wing-gold-frame {
+  position: absolute;
+  inset: 12px;
+  border: 1px solid rgba(212, 175, 55, 0.35);
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+/* Geometric Luxury Jali (Lattice) */
+.wing-laser-lattice {
+  position: absolute;
+  inset: 0;
+  background-image: 
+    radial-gradient(circle at 50% 50%, rgba(212, 175, 55, 0.12) 1.5px, transparent 1.5px),
+    linear-gradient(45deg, rgba(212, 175, 55, 0.05) 25%, transparent 25%, transparent 75%, rgba(212, 175, 55, 0.05) 75%),
+    linear-gradient(-45deg, rgba(212, 175, 55, 0.05) 25%, transparent 25%, transparent 75%, rgba(212, 175, 55, 0.05) 75%);
+  background-size: 32px 32px, 24px 24px, 24px 24px;
+  opacity: 0.8;
+}
+
+.wing-vertical-accent {
+  position: absolute;
+  top: 15%;
+  bottom: 15%;
+  width: 2px;
+  background: linear-gradient(to bottom, transparent, rgba(212, 175, 55, 0.7), transparent);
+}
+
+.door-left .wing-vertical-accent {
+  right: 16px;
+}
+
+.door-right .wing-vertical-accent {
+  left: 16px;
+}
+
+/* When Opening: Doors Glide Smoothly to Left & Right */
+.gate-overlay-modern.opening .modern-door-wing.door-left {
+  transform: translateX(-103%);
+}
+
+.gate-overlay-modern.opening .modern-door-wing.door-right {
+  transform: translateX(103%);
+}
+
+/* Center Medallion (Crest) */
+.modern-center-crest {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 110px;
-  height: 110px;
-  border-radius: 50%;
-  border: 2px dashed rgba(212, 175, 55, 0.6);
-  background: radial-gradient(circle, rgba(212, 175, 55, 0.22) 0%, transparent 70%);
-}
-
-.jali-gold-overlay {
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(circle at center, rgba(255, 215, 0, 0.15), transparent 75%);
-}
-
-/* 3D Brass Lion Knocker */
-.brass-knocker-3d {
-  position: absolute;
-  top: 58%;
-  z-index: 10;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.knocker-left { right: 15px; }
-.knocker-right { left: 15px; }
-
-.knocker-head-plate {
-  width: 42px;
-  height: 42px;
-  border-radius: 50%;
-  background: radial-gradient(circle, #fff1b8 0%, #d4af37 60%, #6e4e0b 100%);
-  border: 2px solid #fff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.9);
-}
-
-.lion-relief { font-size: 1.15rem; }
-
-.knocker-swing-ring {
-  width: 30px;
-  height: 30px;
-  border: 4px solid #d4af37;
-  border-radius: 50%;
-  margin-top: -6px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.95);
-  animation: knockerSway 3s ease-in-out infinite alternate;
-}
-
-/* 3D Studs (Rivets / Spikes) */
-.door-studs-vertical {
-  position: absolute;
-  display: flex;
-  flex-direction: column;
-  gap: 26px;
-  z-index: 5;
-}
-
-.studs-right { right: 16px; top: 12px; }
-.studs-left { left: 16px; top: 12px; }
-.studs-center { left: 50%; transform: translateX(-50%); bottom: 25px; gap: 32px; }
-
-.stud-rivet-3d {
-  width: 13px;
-  height: 13px;
-  border-radius: 50%;
-  background: radial-gradient(circle at 35% 35%, #fff 0%, #e6ca65 40%, #7d5910 100%);
-  box-shadow: 0 3px 7px rgba(0, 0, 0, 0.95);
-  border: 0.5px solid #fff;
-}
-
-/* Antique Brass Corner Brackets & Hinges */
-.brass-bracket-corner {
-  position: absolute;
-  width: 26px;
-  height: 26px;
-  border: 2px solid var(--gold-primary);
-}
-
-.corner-top-left { top: 8px; left: 8px; border-right: none; border-bottom: none; }
-.corner-bottom-left { bottom: 8px; left: 8px; border-right: none; border-top: none; }
-.corner-top-right { top: 8px; right: 8px; border-left: none; border-bottom: none; }
-.corner-bottom-right { bottom: 8px; right: 8px; border-left: none; border-top: none; }
-
-.brass-door-hinge {
-  position: absolute;
-  width: 14px;
-  height: 22px;
-  background: linear-gradient(to bottom, #d4af37, #8c6b16);
-  border: 1px solid #fff;
-}
-
-.door-left .hinge-top { top: 15px; left: 0; }
-.door-left .hinge-bottom { bottom: 15px; left: 0; }
-.door-right .hinge-top { top: 15px; right: 0; }
-.door-right .hinge-bottom { bottom: 15px; right: 0; }
-
-/* 3D Thickness Rim */
-.door-thickness-rim {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  width: 18px;
-  background: linear-gradient(to right, #8c6b16, #d4af37, #4a3407);
-}
-
-.rim-right { right: -18px; transform-origin: left; transform: rotateY(90deg); }
-.rim-left { left: -18px; transform-origin: right; transform: rotateY(-90deg); }
-
-/* Center Latch & Royal Seal (Tap to Unlock) */
-.royal-seal-lock-3d {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%) translateZ(45px);
-  z-index: 35;
-  width: 135px;
-  height: 135px;
+  width: 140px;
+  height: 140px;
+  z-index: 15;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: transform 0.3s ease, opacity 0.4s ease;
+  transition: transform 0.8s cubic-bezier(0.2, 0.9, 0.3, 1), opacity 0.6s ease;
   will-change: transform, opacity;
+  user-select: none;
 }
 
-.sliding-brass-latch-bar {
+.modern-progress-ring {
   position: absolute;
-  width: 180px;
-  height: 15px;
-  background: linear-gradient(to bottom, #fbeea4 0%, #d4af37 50%, #7d5910 100%);
-  border: 1px solid #fff;
-  border-radius: 4px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.9);
-  z-index: 1;
-  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.royal-seal-lock-3d:hover {
-  transform: translate(-50%, -50%) translateZ(55px) scale(1.08);
-}
-
-.gate-overlay-3d.opening .royal-seal-lock-3d {
-  opacity: 0;
-  transform: translate(-50%, -50%) translateZ(90px) scale(1.35);
+  inset: -10px;
+  width: 160px;
+  height: 160px;
+  transform: rotate(-90deg);
   pointer-events: none;
 }
 
-.gate-overlay-3d.opening .sliding-brass-latch-bar {
-  transform: scaleX(0);
+.modern-progress-ring .ring-bg {
+  fill: none;
+  stroke: rgba(212, 175, 55, 0.2);
+  stroke-width: 3.5;
 }
 
-.lock-pulse-halo {
-  position: absolute;
-  inset: -12px;
-  border-radius: 50%;
-  border: 2px dashed var(--gold-primary);
-  animation: rotateClockwise 20s linear infinite;
+.modern-progress-ring .ring-indicator {
+  fill: none;
+  stroke: #fbeea4;
+  stroke-width: 4;
+  stroke-linecap: round;
+  stroke-dasharray: 452; /* 2 * PI * 72 */
+  stroke-dashoffset: 452;
+  animation: countdownStroke 1.5s cubic-bezier(0.2, 0.7, 0.4, 1) forwards;
+  filter: drop-shadow(0 0 6px rgba(251, 238, 164, 0.8));
 }
 
-.lock-sunburst-rings {
-  position: absolute;
-  inset: -8px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(212, 175, 55, 0.45) 0%, transparent 70%);
-  animation: pulseGlow 2s ease-in-out infinite alternate;
+@keyframes countdownStroke {
+  0% { stroke-dashoffset: 452; }
+  100% { stroke-dashoffset: 0; }
 }
 
-.lock-ruby-gems {
-  position: absolute;
-  inset: -6px;
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: 3;
-}
-
-.ruby-gem {
-  position: absolute;
-  font-size: 0.75rem;
-  filter: drop-shadow(0 0 6px #ff0055);
-}
-
-.gem-1 { top: 0; left: 50%; transform: translateX(-50%); }
-.gem-2 { bottom: 0; left: 50%; transform: translateX(-50%); }
-.gem-3 { left: 0; top: 50%; transform: translateY(-50%); }
-.gem-4 { right: 0; top: 50%; transform: translateY(-50%); }
-
-.seal-medallion-core {
+.crest-glass-medallion {
   position: relative;
-  width: 100%;
-  height: 100%;
+  width: 126px;
+  height: 126px;
   border-radius: 50%;
-  background: radial-gradient(circle at 35% 35%, #fff8d6 0%, #d4af37 50%, #694a08 100%);
-  border: 3.5px solid #fff;
-  box-shadow: 0 0 40px rgba(212, 175, 55, 0.85), 0 8px 25px rgba(0, 0, 0, 0.9);
+  background: radial-gradient(circle at 40% 30%, rgba(65, 8, 18, 0.95), rgba(20, 2, 5, 0.98));
+  border: 2px solid rgba(212, 175, 55, 0.75);
+  box-shadow: 
+    0 12px 30px rgba(0, 0, 0, 0.75),
+    0 0 20px rgba(212, 175, 55, 0.4),
+    inset 0 0 18px rgba(212, 175, 55, 0.25);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  color: #240208;
-  text-align: center;
-  padding: 6px;
-  z-index: 2;
+  overflow: hidden;
+  backdrop-filter: blur(8px);
 }
 
-.seal-om-glyph {
-  font-size: 1.4rem;
-  font-weight: 900;
-  color: #630c1c;
-  line-height: 1;
-  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.5);
+.crest-monogram-wrap {
+  width: 78px;
+  height: 78px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 1px solid rgba(212, 175, 55, 0.4);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.seal-shree-shloka {
-  font-family: var(--font-gujarati);
-  font-size: 0.65rem;
-  font-weight: 800;
-  margin-top: 2px;
-  color: #140103;
+.crest-mk-logo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
-.seal-cta-words .cta-word-en {
-  display: block;
+.crest-open-guide {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 4px;
+}
+
+.crest-open-guide .guide-en {
   font-family: var(--font-cinzel);
-  font-size: 0.68rem;
-  font-weight: 900;
-  letter-spacing: 1px;
-  color: #140103;
+  font-size: 0.55rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: var(--gold-light);
 }
 
-.seal-cta-words .cta-word-gu {
-  font-family: var(--font-gujarati);
-  font-size: 0.98rem;
-  font-weight: 800;
-  color: #630c1c;
-  line-height: 1;
+.crest-open-guide .guide-tap {
+  font-family: var(--font-modern);
+  font-size: 0.5rem;
+  letter-spacing: 0.8px;
+  color: rgba(255, 255, 255, 0.7);
+  display: none;
 }
 
-.seal-hand-finger {
-  margin-top: 2px;
-  font-size: 0.85rem;
-  color: #440711;
+/* Medallion fadeout when opening */
+.gate-overlay-modern.opening .modern-center-crest {
+  transform: translate(-50%, -50%) scale(0.5);
+  opacity: 0;
+  pointer-events: none;
 }
 
 /* ========================================================
-   SPECTACULAR 3D REVEAL STAGE (AFTER GATE OPENS)
+   MODERN REVEAL STAGE (INSIDE THE PORTAL)
    ======================================================== */
-.gate-reveal-content {
+.modern-reveal-content {
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%) translateZ(10px) scale(0.88);
-  z-index: 6;
-  text-align: center;
-  width: 92%;
-  max-width: 440px;
-  max-height: 88vh;
+  inset: 0;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 16px 14px;
   overflow-y: auto;
   overflow-x: hidden;
   -webkit-overflow-scrolling: touch;
   opacity: 0;
+  transform: scale(0.92);
   pointer-events: none;
-  transition: all 1.8s cubic-bezier(0.16, 1, 0.3, 1) 0.5s;
-  will-change: transform, opacity;
-  padding: 10px 6px;
+  transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1) 0.3s, transform 1s cubic-bezier(0.16, 1, 0.3, 1) 0.3s;
+  will-change: opacity, transform;
 }
 
-/* Custom subtle scrollbar for reveal stage */
-.gate-reveal-content::-webkit-scrollbar {
-  width: 4px;
-}
-.gate-reveal-content::-webkit-scrollbar-thumb {
-  background: var(--gold-primary);
-  border-radius: 4px;
-}
-
-.gate-overlay-3d.opening .gate-reveal-content {
+.gate-overlay-modern.opening .modern-reveal-content {
   opacity: 1;
-  transform: translate(-50%, -50%) translateZ(60px) scale(1);
+  transform: scale(1);
   pointer-events: auto;
 }
 
-/* 3D Royal Mandap Canopy Arch */
-.reveal-mandap-canopy {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-bottom: 4px;
-}
-
-.mandap-gold-dome {
-  font-size: 1.6rem;
-  filter: drop-shadow(0 0 12px rgba(255, 215, 0, 0.9));
-  animation: floatStage 3s ease-in-out infinite alternate;
-}
-
-.mandap-pearl-drops {
-  display: flex;
-  gap: 8px;
-  color: var(--gold-light);
-  font-size: 0.7rem;
-  margin-top: -2px;
-}
-
-/* 3D Intertwined Golden Wedding Rings */
-.rings-3d-scene {
+/* Intertwined Diamond Rings */
+.modern-rings-halo {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 8px;
-  perspective: 700px;
-  transform-style: preserve-3d;
+  gap: 2px;
+  margin-bottom: 6px;
 }
 
-.ring-3d {
-  width: 36px;
-  height: 36px;
+.modern-ring {
+  width: 22px;
+  height: 22px;
   border-radius: 50%;
-  border: 3.5px solid var(--gold-primary);
-  box-shadow: 0 0 12px rgba(212, 175, 55, 0.75), inset 0 0 6px rgba(255, 255, 255, 0.5);
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  background: radial-gradient(circle, transparent 60%, rgba(212, 175, 55, 0.2) 100%);
+  border: 2px solid var(--gold-primary);
+  box-shadow: 0 0 10px rgba(212, 175, 55, 0.4);
 }
 
-.ring-groom {
-  transform: rotateY(25deg) rotateX(20deg);
-  animation: orbitRings3D 8s linear infinite;
+.modern-ring.ring-left {
+  margin-right: -6px;
 }
 
-.ring-bride {
-  transform: rotateY(-25deg) rotateX(-20deg);
-  margin-left: -14px;
-  animation: orbitRings3D 8s linear infinite reverse;
+.modern-ring.ring-right {
+  margin-left: -6px;
 }
 
-.ring-diamond {
-  position: absolute;
-  top: -14px;
-  font-size: 0.95rem;
-  filter: drop-shadow(0 0 10px rgba(0, 240, 255, 0.95));
-  animation: diamondShine 2s ease-in-out infinite alternate;
+.modern-ring-diamond {
+  font-size: 1.1rem;
+  filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.8));
+  animation: diamondSparkle 2s ease-in-out infinite;
 }
 
-.ring-sparkle-glint {
-  position: absolute;
-  inset: 0;
-  border-radius: 50%;
-  background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.7) 0%, transparent 40%);
+@keyframes diamondSparkle {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.15) rotate(5deg); }
 }
 
-.stage-blessing-pill {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  background: rgba(36, 4, 12, 0.88);
-  border: 1.5px solid var(--gold-primary);
-  border-radius: 20px;
-  padding: 3px 16px;
-  color: var(--gold-light);
+.modern-celebration-pill {
   font-family: var(--font-cinzel);
-  font-size: 0.78rem;
-  letter-spacing: 1.5px;
+  font-size: 0.65rem;
+  letter-spacing: 2px;
+  color: var(--gold-light);
+  background: rgba(212, 175, 55, 0.12);
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  padding: 3px 12px;
+  border-radius: 20px;
   margin-bottom: 10px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.7);
+  text-transform: uppercase;
 }
 
-.gold-om { color: var(--gold-primary); }
-
-/* Royal Arched Couple Portrait in 3D Jharokha Frame */
-.reveal-couple-portrait-wrap {
+/* Modern Luxury Couple Bezel (Photo Showcase) */
+.modern-couple-bezel {
   position: relative;
-  width: 140px;
-  height: 140px;
-  margin: 0 auto 12px;
-  border-radius: 50%;
-  transform-style: preserve-3d;
-  transition: transform 0.2s ease-out;
-  animation: floatStage 3.5s ease-in-out infinite alternate;
+  width: 175px;
+  height: 215px;
+  border-radius: 22px;
+  margin-bottom: 10px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.portrait-halo-spinner {
+.bezel-halo-ring {
   position: absolute;
-  inset: -8px;
-  border-radius: 50%;
-  border: 2px dashed var(--gold-primary);
-  animation: rotateClockwise 25s linear infinite;
-  box-shadow: 0 0 28px rgba(212, 175, 55, 0.75);
+  inset: -6px;
+  border-radius: 26px;
+  border: 1.5px solid rgba(212, 175, 55, 0.6);
+  box-shadow: 0 0 20px rgba(212, 175, 55, 0.35);
+  animation: bezelPulse 3s ease-in-out infinite alternate;
 }
 
-.portrait-aura-glow {
-  position: absolute;
-  inset: 0;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(212, 175, 55, 0.35) 0%, transparent 70%);
+@keyframes bezelPulse {
+  0% { transform: scale(0.99); opacity: 0.7; }
+  100% { transform: scale(1.02); opacity: 1; }
 }
 
-.portrait-royal-arch-crest {
-  position: absolute;
-  top: -16px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 10;
+.bezel-inner-glass {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 20px;
+  overflow: hidden;
+  border: 2px solid rgba(251, 238, 164, 0.8);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.8);
+  background: #000;
 }
 
-.crown-mini {
-  font-size: 1.25rem;
-  filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.95));
-}
-
-.reveal-couple-img {
+.modern-couple-img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  border-radius: 50%;
-  border: 3.5px solid var(--gold-primary);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.9);
+  object-position: center 25%;
   display: block;
 }
 
-.portrait-glass-shine {
+.glass-specular-glare {
   position: absolute;
-  inset: 0;
-  border-radius: 50%;
-  background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.3) 0%, transparent 60%);
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(45deg, transparent 40%, rgba(255, 255, 255, 0.18) 50%, transparent 60%);
+  transform: rotate(25deg);
   pointer-events: none;
+  animation: glareSweep 5s infinite;
 }
 
-.portrait-bottom-pennant {
+@keyframes glareSweep {
+  0% { transform: translateY(-100%) rotate(25deg); }
+  35%, 100% { transform: translateY(100%) rotate(25deg); }
+}
+
+.modern-bezel-tag {
   position: absolute;
   bottom: -10px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: linear-gradient(135deg, #440711, #240308);
-  border: 1px solid var(--gold-primary);
-  padding: 2px 10px;
-  border-radius: 12px;
-  white-space: nowrap;
+  background: linear-gradient(135deg, #1b0206 0%, #3a050f 100%);
+  border: 1px solid rgba(212, 175, 55, 0.6);
+  padding: 3px 12px;
+  border-radius: 14px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.6);
   font-family: var(--font-cinzel);
-  font-size: 0.65rem;
-  font-weight: 800;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 2px;
   color: var(--gold-light);
-  letter-spacing: 1px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.8);
+  white-space: nowrap;
 }
 
-/* 3D Unrolling Shahi Farman Scroll */
-.shahi-farman-card {
-  position: relative;
-  margin-top: 10px;
-  transform: perspective(800px) rotateX(0deg);
-  transition: transform 0.4s ease;
-  animation: unrollFarman 1.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+/* Modern Sleek Farman Card */
+.modern-farman-card {
+  width: 100%;
+  max-width: 380px;
+  background: rgba(25, 3, 7, 0.88);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(212, 175, 55, 0.35);
+  border-radius: 20px;
+  padding: 14px 16px;
+  text-align: center;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.7);
 }
 
-.scroll-rod {
+.farman-modern-header {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  height: 12px;
-  z-index: 5;
-  position: relative;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 6px;
 }
 
-.rod-finial {
-  font-size: 1rem;
-  color: var(--gold-primary);
-  filter: drop-shadow(0 0 6px rgba(212, 175, 55, 0.8));
-}
-
-.rod-shaft {
+.farman-gold-line {
   flex: 1;
-  height: 6px;
-  background: linear-gradient(to right, #8c6b16, #fbeea4, #8c6b16);
-  border-radius: 3px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.7);
+  height: 1px;
+  background: linear-gradient(to right, transparent, rgba(212, 175, 55, 0.5), transparent);
+}
+
+.farman-badge-text {
+  font-family: var(--font-cinzel);
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: var(--gold-primary);
+  text-transform: uppercase;
+}
+
+.modern-couple-en {
+  font-family: var(--font-cinzel);
+  font-size: 1.45rem;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  line-height: 1.2;
+  background: linear-gradient(135deg, #ffffff 0%, #fbeea4 45%, #d4af37 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 2px;
+}
+
+.modern-couple-gu {
+  font-family: var(--font-gujarati);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--gold-light);
+  margin-bottom: 10px;
+}
+
+.modern-couple-gu .modern-heart {
+  color: #ff3366;
+  font-size: 0.9rem;
   margin: 0 4px;
 }
 
-.rod-top { margin-bottom: -4px; }
-.rod-bottom { margin-top: -4px; }
+.modern-chips-row {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  margin-bottom: 12px;
+}
 
-.farman-inner-parchment {
-  background: linear-gradient(135deg, rgba(255, 253, 246, 0.98), rgba(248, 238, 214, 0.99));
-  border: 2px solid var(--gold-primary);
+.modern-chip {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(212, 175, 55, 0.1);
+  border: 1px solid rgba(212, 175, 55, 0.25);
   border-radius: 16px;
-  padding: 16px 14px 14px;
-  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.85), inset 0 0 25px rgba(212, 175, 55, 0.25);
-}
-
-.farman-header {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  font-family: var(--font-cinzel);
-  font-size: 0.74rem;
-  letter-spacing: 1.2px;
-  color: var(--royal-crimson);
-  font-weight: 700;
-  text-transform: uppercase;
-}
-
-.farman-leaf { color: var(--gold-primary); }
-
-.farman-couple-en {
-  font-family: var(--font-cinzel);
-  font-size: 1.85rem;
-  font-weight: 900;
-  color: var(--royal-crimson);
-  line-height: 1.15;
-  margin-top: 4px;
-  text-shadow: 0 1px 3px rgba(0,0,0,0.15);
-}
-
-.farman-couple-gu {
-  font-family: var(--font-gujarati);
-  font-size: 1.2rem;
-  font-weight: 800;
-  color: var(--gold-dark);
-  margin-top: 2px;
-}
-
-.heart-pulse { color: #ff476f; margin: 0 4px; }
-
-.farman-info-grid {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  margin-top: 8px;
-  flex-wrap: wrap;
-}
-
-.farman-info-chip {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
   padding: 4px 10px;
-  background: rgba(99, 12, 28, 0.08);
-  border: 1px solid rgba(212, 175, 55, 0.4);
-  border-radius: 14px;
-  color: var(--royal-crimson);
-  font-size: 0.78rem;
-  font-weight: 600;
-}
-
-.farman-info-chip i { color: var(--gold-dark); font-size: 0.8rem; }
-
-.farman-wax-seal-strip {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 10px auto 4px;
-  position: relative;
-}
-
-.wax-seal-ribbon {
-  width: 50px;
-  height: 2px;
-  background: var(--royal-crimson);
-}
-
-.mini-wax-seal {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  background: radial-gradient(circle at 35% 35%, #961227 0%, #5a0714 60%, #30030a 100%);
-  border: 1.5px solid var(--gold-primary);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
-  margin: 0 -8px;
-  z-index: 2;
-}
-
-.mini-wax-seal .seal-glyph {
-  font-family: var(--font-cinzel);
   font-size: 0.72rem;
-  font-weight: 900;
-  color: var(--gold-light);
-  letter-spacing: 0.5px;
+  color: rgba(255, 255, 255, 0.92);
 }
 
-/* 3D Raised Enter Celebration Button */
-.enter-palace-btn {
+.modern-chip i {
+  color: var(--gold-primary);
+  font-size: 0.75rem;
+}
+
+/* Modern Enter Button */
+.modern-enter-btn {
   position: relative;
-  margin-top: 14px;
-  background: linear-gradient(135deg, #fbeea4 0%, #d4af37 50%, #997523 100%);
-  color: #140103;
-  font-family: var(--font-modern);
-  font-weight: 800;
-  font-size: 0.95rem;
-  border: 2px solid #fff;
-  padding: 12px 24px;
-  border-radius: 30px;
-  cursor: pointer;
-  box-shadow: 0 8px 0 #7d5910, 0 12px 25px rgba(0, 0, 0, 0.85);
-  display: inline-flex;
+  width: 100%;
+  display: flex;
   align-items: center;
-  gap: 8px;
-  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  justify-content: center;
+  gap: 10px;
+  background: linear-gradient(135deg, #d4af37 0%, #fbeea4 50%, #c59828 100%);
+  color: #24030a;
+  border: none;
+  border-radius: 16px;
+  padding: 12px 20px;
+  font-family: var(--font-cinzel);
+  font-size: 0.88rem;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  cursor: pointer;
+  box-shadow: 0 8px 24px rgba(212, 175, 55, 0.45);
   overflow: hidden;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  user-select: none;
 }
 
-.enter-palace-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 0 #7d5910, 0 16px 30px rgba(212, 175, 55, 0.7);
+.modern-enter-btn:hover, .modern-enter-btn:active {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 12px 30px rgba(212, 175, 55, 0.65);
 }
 
-.enter-palace-btn:active {
-  transform: translateY(4px);
-  box-shadow: 0 4px 0 #7d5910, 0 6px 15px rgba(0, 0, 0, 0.8);
-}
-
-.btn-icon-left { font-size: 1.1rem; }
-.btn-bounce-arrow { animation: bounceDown 1.5s infinite; }
-
-.btn-shine {
+.enter-btn-shine {
   position: absolute;
   top: 0;
   left: -100%;
-  width: 100%;
+  width: 60%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), transparent);
-  animation: shineSweep 2.5s infinite;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.6), transparent);
+  transform: skewX(-25deg);
+  animation: btnShineSweep 3s infinite;
 }
 
-.scroll-instruction {
-  font-size: 0.75rem;
-  color: var(--text-muted);
+@keyframes btnShineSweep {
+  0% { left: -100%; }
+  35%, 100% { left: 160%; }
+}
+
+.modern-enter-btn i {
+  font-size: 0.95rem;
+}
+
+.modern-scroll-prompt {
   margin-top: 8px;
-}
-
-/* Floating 3D Diyas on Sides of Reveal */
-.reveal-floating-diya {
-  position: absolute;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  z-index: 8;
-  animation: diyaLevitate 3.5s ease-in-out infinite alternate;
-}
-
-.reveal-floating-diya.diya-left { left: 4px; top: 35%; }
-.reveal-floating-diya.diya-right { right: 4px; top: 35%; animation-delay: 1.7s; }
-
-.floating-flame {
-  width: 9px;
-  height: 14px;
-  border-radius: 50% 50% 20% 20%;
-  background: radial-gradient(circle at 50% 80%, #fff 0%, #ffbe0b 40%, #fb5607 80%, transparent 100%);
-  animation: flameFlicker 1.4s ease-in-out infinite alternate;
-  filter: drop-shadow(0 0 10px rgba(255, 180, 0, 0.95));
-  margin-bottom: -4px;
-}
-
-.floating-bowl {
-  font-size: 1.3rem;
-  filter: drop-shadow(0 3px 6px rgba(0,0,0,0.8));
-}
-
-.gate-studio-tag {
-  margin-top: 10px;
-  font-size: 0.72rem;
-  color: rgba(251, 238, 164, 0.75);
+  font-size: 0.68rem;
   letter-spacing: 0.8px;
-  text-transform: uppercase;
+  color: rgba(251, 238, 164, 0.75);
 }
 
-.gate-studio-tag strong { color: var(--gold-light); }
+/* Mobile Optimizations for Modern Portal */
+@media (max-width: 600px) {
+  .modern-portal-stage {
+    width: 95vw;
+    height: 94vh;
+    gap: 8px;
+  }
+  
+  .modern-doors-chassis {
+    max-height: 80vh;
+  }
+  
+  .modern-center-crest {
+    width: 120px;
+    height: 120px;
+  }
+  
+  .modern-progress-ring {
+    width: 140px;
+    height: 140px;
+    inset: -10px;
+  }
+  
+  .crest-glass-medallion {
+    width: 110px;
+    height: 110px;
+  }
+  
+  .crest-monogram-wrap {
+    width: 66px;
+    height: 66px;
+  }
+  
+  .modern-couple-bezel {
+    width: 148px;
+    height: 180px;
+    margin-bottom: 8px;
+  }
+  
+  .modern-couple-en {
+    font-size: 1.25rem;
+  }
+  
+  .modern-couple-gu {
+    font-size: 0.9rem;
+    margin-bottom: 8px;
+  }
+  
+  .modern-farman-card {
+    padding: 10px 12px;
+  }
+  
+  .modern-enter-btn {
+    padding: 10px 16px;
+    font-size: 0.82rem;
+  }
+}
 
 
 /* ========================================================

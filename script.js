@@ -24,16 +24,23 @@ function initGateExperience() {
   const replayGateBtn = document.getElementById('replay-gate-btn');
 
   let isGateOpen = false;
+  let autoOpenTimer = null;
 
   function openGate() {
     if (isGateOpen) return;
     isGateOpen = true;
+    if (autoOpenTimer) {
+      clearTimeout(autoOpenTimer);
+      autoOpenTimer = null;
+    }
 
     // Resonant brass temple bell chime
     playTempleBellChime();
 
-    // Trigger smooth 3D Doors swing open animation
-    gateOverlay.classList.add('opening');
+    // Trigger smooth modern doors glide open
+    if (gateOverlay) {
+      gateOverlay.classList.add('opening');
+    }
 
     // Trigger celebratory flower petals explosion
     if (window.triggerCelebrationBurst) {
@@ -45,14 +52,21 @@ function initGateExperience() {
 
     showToast('॥ શ્રી ગણેશાય નમઃ ॥ • Welcome to the Royal Wedding');
 
-    // Allow user 2.2 seconds to enjoy the 3D reveal before enabling gesture dismissal
+    // Allow user to enjoy the modern reveal before enabling gesture dismissal
     setTimeout(() => {
       enableGateAutoDismiss();
-    }, 2200);
+    }, 1800);
   }
 
+  // Automatic Open: Starts opening smoothly after 1.5s countdown
+  autoOpenTimer = setTimeout(() => {
+    openGate();
+  }, 1500);
+
   function dismissGate() {
-    gateOverlay.classList.add('dismissed');
+    if (gateOverlay) {
+      gateOverlay.classList.add('dismissed');
+    }
     document.body.style.overflowY = 'auto';
 
     // Smooth scroll down to celebration hero
@@ -66,7 +80,7 @@ function initGateExperience() {
     let touchStartY = 0;
 
     const handleWheel = (e) => {
-      if (isGateOpen && !gateOverlay.classList.contains('dismissed') && e.deltaY > 30) {
+      if (isGateOpen && gateOverlay && !gateOverlay.classList.contains('dismissed') && e.deltaY > 30) {
         dismissGate();
         window.removeEventListener('wheel', handleWheel);
       }
@@ -77,10 +91,10 @@ function initGateExperience() {
     };
 
     const handleTouchMove = (e) => {
-      if (!isGateOpen || gateOverlay.classList.contains('dismissed')) return;
+      if (!isGateOpen || !gateOverlay || gateOverlay.classList.contains('dismissed')) return;
       const currentY = e.touches[0].clientY;
-      // Require at least 50px deliberate downward swipe
-      if (touchStartY - currentY > 50 || currentY - touchStartY > 60) {
+      // Require at least 45px swipe
+      if (touchStartY - currentY > 45 || currentY - touchStartY > 50) {
         dismissGate();
         window.removeEventListener('touchstart', handleTouchStart);
         window.removeEventListener('touchmove', handleTouchMove);
@@ -92,16 +106,29 @@ function initGateExperience() {
     window.addEventListener('touchmove', handleTouchMove, { passive: true });
   }
 
+  // Tap anywhere on overlay to open instantly if not yet open
+  if (gateOverlay) {
+    gateOverlay.addEventListener('click', () => {
+      if (!isGateOpen) {
+        openGate();
+      }
+    });
+  }
+
   if (gateCenterSeal) {
-    gateCenterSeal.addEventListener('click', openGate);
-    gateCenterSeal.addEventListener('touchstart', (e) => {
-      e.preventDefault();
+    gateCenterSeal.addEventListener('click', (e) => {
+      e.stopPropagation();
       openGate();
-    }, { passive: false });
+    });
+    gateCenterSeal.addEventListener('touchstart', (e) => {
+      e.stopPropagation();
+      openGate();
+    }, { passive: true });
   }
 
   if (enterSiteBtn) {
-    enterSiteBtn.addEventListener('click', () => {
+    enterSiteBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
       playTempleBellChime();
       if (window.triggerCelebrationBurst) window.triggerCelebrationBurst();
       dismissGate();
@@ -111,9 +138,13 @@ function initGateExperience() {
   if (replayGateBtn) {
     replayGateBtn.addEventListener('click', () => {
       isGateOpen = false;
-      gateOverlay.classList.remove('dismissed', 'opening');
+      if (gateOverlay) {
+        gateOverlay.classList.remove('dismissed', 'opening');
+      }
       window.scrollTo({ top: 0, behavior: 'smooth' });
-      showToast('3D Royal Palace Gate Re-locked. Tap to open!');
+      showToast('Welcome Portal Re-locked. Opening...');
+      if (autoOpenTimer) clearTimeout(autoOpenTimer);
+      autoOpenTimer = setTimeout(openGate, 1500);
     });
   }
 }
@@ -159,7 +190,7 @@ function initGate3DInteractiveTilt() {
   if (window.innerWidth < 768) return; // Keep mobile buttery smooth
 
   const overlay = document.getElementById('gate-overlay');
-  const stage = document.getElementById('palace-arch-stage');
+  const stage = document.getElementById('modern-portal-stage') || document.getElementById('palace-arch-stage');
   const coupleWrap = document.getElementById('reveal-couple-wrap');
   const farmanCard = document.getElementById('reveal-farman-card');
 
@@ -540,7 +571,7 @@ function sendRsvpWhatsApp() {
     return;
   }
 
-  const hostPhone = '918320757526';
+  const hostPhone = '916351588253';
 
   let text = `*॥ શ્રી ગણેશાય નમઃ ॥*\n\n`;
   text += `આદરણીય અકબરી પરિવાર,\n`;
